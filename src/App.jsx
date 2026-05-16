@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
+import Navbar from "./Components/Navbar";
+import Home from "./Pages/Home";
 import Product from "./pages/Product";
-import Cart from "./pages/Cart";
-import Login from "./pages/Login";
+import Cart from "./Pages/Cart"
+import Login from "./Pages/Login";
 import { CartProvider } from "./sources/cartContext";
 import { AuthProvider } from "./sources/AuthContext";
 
