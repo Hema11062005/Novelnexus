@@ -26,6 +26,7 @@ function Navbar() {
             </span>
             )}
         </Link>
+        <Link to="/signup">Signup</Link>
 
         {/* Auth Section */}
         {user ? (

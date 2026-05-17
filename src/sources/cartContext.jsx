@@ -1,38 +1,94 @@
-// context/CartContext.jsx
 import { createContext, useState } from "react";
 
-export const CartContext = createContext();
+export const CartProvider = createContext();
 
-export function CartProvider({ children }) {
-    const [cart, setCart] = useState([]);
+export function Cart({ children }) {
+  const [cart, setCart] = useState([]);
+  const [popup, setPopup] = useState("");
 
-  // Add item
-    const addToCart = (book) => {
-    setCart((prev) => [...prev, book]);
-    };
+  // Add to cart with quantity
+  const addToCart = (book) => {
+    const existingItem = cart.find((item) => item.id === book.id);
+
+    if (existingItem) {
+      setCart(
+        cart.map((item) =>
+          item.id === book.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      );
+    } else {
+      setCart([...cart, { ...book, quantity: 1 }]);
+    }
+
+    // Popup message
+    setPopup(`${book.title} added to cart`);
+
+    setTimeout(() => {
+      setPopup("");
+    }, 2000);
+  };
 
   // Remove item
-    const removeFromCart = (id) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
-    };
+  const removeFromCart = (id) => {
+    setCart(cart.filter((item) => item.id !== id));
+  };
 
-  // ✅ Total items
-    const totalItems = cart.length;
+  // Increase quantity
+  const increaseQuantity = (id) => {
+    setCart(
+      cart.map((item) =>
+        item.id === id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      )
+    );
+  };
 
-  // ✅ Total price
-    const totalPrice = cart.reduce((total, item) => total + item.price, 0);
+  // Decrease quantity
+  const decreaseQuantity = (id) => {
+    setCart(
+      cart.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              quantity:
+                item.quantity > 1
+                  ? item.quantity - 1
+                  : 1,
+            }
+          : item
+      )
+    );
+  };
 
-    return (
+  // Total items
+  const totalItems = cart.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
+  // Total price
+  const totalPrice = cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+
+  return (
     <CartContext.Provider
-        value={{
+      value={{
         cart,
         addToCart,
         removeFromCart,
+        increaseQuantity,
+        decreaseQuantity,
         totalItems,
         totalPrice,
-        }}
+        popup,
+      }}
     >
-        {children}
+      {children}
     </CartContext.Provider>
-    );
+  );
 }
