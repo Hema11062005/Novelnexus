@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useContext } from "react";
 
 import Navbar from "./Components/Navbar";
-
 import Home from "./Pages/Home";
 import Product from "./Pages/Product";
 import Cart from "./Pages/Cart";
