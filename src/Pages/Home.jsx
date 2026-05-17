@@ -1,5 +1,5 @@
 // pages/Home.jsx
-import { books } from "../data";
+import { books } from "../Data";
 import BookCard from "../Components/Bookcard";
 
 function Home() {

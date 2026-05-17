@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { books } from "../data";
+import { books } from "../Data";
 import { useContext } from "react";
 import { CartContext } from "../sources/cartContext";
 
